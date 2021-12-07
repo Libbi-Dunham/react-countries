@@ -1,6 +1,6 @@
 import { checkError, client } from './client';
 
-export async function countries() {
+export async function getCountries() {
   const response = await client.from('countries').select();
   return checkError(response);
 }

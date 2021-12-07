@@ -14,6 +14,10 @@ function App() {
     };
     fetchData();
   }, []);
+
+  // function filterCountries() {
+
+  // }
   return (
     <section className="main">
       <Header />
