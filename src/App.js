@@ -7,6 +7,8 @@ import { getCountries } from './services/countries';
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [query, setQuery] = useState([]);
+  const [continent, setContinent] = useState('Choose');
   useEffect(() => {
     const fetchData = async () => {
       const countriesData = await getCountries();
@@ -15,14 +17,37 @@ function App() {
     fetchData();
   }, []);
 
-  // function filterCountries() {
-
-  // }
+  function filterCountries() {
+    return countries.filter(
+      (countries) => countries.name.includes(query) && countries.continent === continent
+    );
+  }
   return (
     <section className="main">
       <Header />
+      <input
+        placeholder="Search A Flag!"
+        type="text"
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value);
+        }}
+      />
+      <select value={continent} onChange={(e) => setContinent(e.target.value)}>
+        <option value="Choose">Choose</option>
+        <option value="Africa">Africa</option>
+        <option value="Asia">Asia</option>
+        <option value="Antarctica">Antarctica</option>
+        <option value="Europe">Europe</option>
+        <option value="North-America">North America</option>
+        <option value="Oceania">Oceania</option>
+        <option value="South-America">South America</option>
+      </select>
+
+      {filterCountries().map((countries) => (
+        <CountriesCard key={countries.name} {...countries} />
+      ))}
       <Footer />
-      <CountriesCard />
     </section>
   );
 }
