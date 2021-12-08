@@ -18,18 +18,18 @@ function App() {
   }, []);
 
   function filterCountries() {
-    return countries.filter((countries) => {
+    return countries.filter((country) => {
       return (
-        countries.name.includes(query) &&
-        (countries.continent === continent || continent === 'Choose')
+        country.name.includes(query) && (country.continent === continent || continent === 'Choose')
       );
     });
   }
+
   return (
     <section className="main">
       <Header />
       <input
-        placeholder="Search A Flag!"
+        placeholder="Search a Flag!"
         type="text"
         value={query}
         onChange={(e) => {
@@ -47,8 +47,8 @@ function App() {
         <option value="South America">South America</option>
       </select>
 
-      {filterCountries().map((countries) => (
-        <CountriesCard key={countries.name} {...countries} />
+      {filterCountries().map((country) => (
+        <CountriesCard key={country.name} {...country} />
       ))}
       <Footer />
     </section>
