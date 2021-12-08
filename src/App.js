@@ -46,10 +46,12 @@ function App() {
         <option value="Oceania">Oceania</option>
         <option value="South America">South America</option>
       </select>
+      <section className="country">
+        {filterCountries().map((country) => (
+          <CountriesCard key={country.name} {...country} />
+        ))}
+      </section>
 
-      {filterCountries().map((country) => (
-        <CountriesCard key={country.name} {...country} />
-      ))}
       <Footer />
     </section>
   );

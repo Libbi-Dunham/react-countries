@@ -5,3 +5,11 @@
   font-weight: normal;
   font-style: normal;
 }
+
+.Countries-Card {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
