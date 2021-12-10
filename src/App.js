@@ -9,13 +9,19 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [query, setQuery] = useState([]);
   const [continent, setContinent] = useState('Choose');
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       const countriesData = await getCountries();
       setCountries(countriesData);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     };
-    fetchData();
-  }, []);
+    if (loading) {
+      fetchData();
+    }
+  }, [loading]);
 
   function filterCountries() {
     return countries.filter((country) => {
@@ -29,30 +35,35 @@ function App() {
 
   return (
     <section className="main">
-      <Header />
-      <input
-        placeholder="Search a Flag!"
-        type="text"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-        }}
-      />
-      <select value={continent} onChange={(e) => setContinent(e.target.value)}>
-        <option value="Choose">Choose</option>
-        <option value="Africa">Africa</option>
-        <option value="Asia">Asia</option>
-        <option value="Antarctica">Antarctica</option>
-        <option value="Europe">Europe</option>
-        <option value="North America">North America</option>
-        <option value="Oceania">Oceania</option>
-        <option value="South America">South America</option>
-      </select>
-      <section className="country">
-        {filterCountries().map((country) => (
-          <CountriesCard key={country.name} {...country} />
-        ))}
-      </section>
+      {loading && <span className="loader"></span>}
+      {!loading && (
+        <>
+          <Header />
+          <input
+            placeholder="Search a Flag!"
+            type="text"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          <select value={continent} onChange={(e) => setContinent(e.target.value)}>
+            <option value="Choose">Choose</option>
+            <option value="Africa">Africa</option>
+            <option value="Asia">Asia</option>
+            <option value="Antarctica">Antarctica</option>
+            <option value="Europe">Europe</option>
+            <option value="North America">North America</option>
+            <option value="Oceania">Oceania</option>
+            <option value="South America">South America</option>
+          </select>
+          <section className="country">
+            {filterCountries().map((country) => (
+              <CountriesCard key={country.name} {...country} />
+            ))}
+          </section>
+        </>
+      )}
 
       <Footer />
     </section>
