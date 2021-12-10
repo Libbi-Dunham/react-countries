@@ -4,15 +4,17 @@ import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
 import CountriesCard from './components/CountriesCard/CountriesCard';
 import { getCountries } from './services/countries';
+import Controls from './components/Controls/Controls';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [query, setQuery] = useState([]);
   const [continent, setContinent] = useState('Choose');
   const [loading, setLoading] = useState(true);
+  const [sort, setSort] = useState('a');
   useEffect(() => {
     const fetchData = async () => {
-      const countriesData = await getCountries();
+      const countriesData = await getCountries(sort);
       setCountries(countriesData);
       setTimeout(() => {
         setLoading(false);
@@ -21,14 +23,13 @@ function App() {
     if (loading) {
       fetchData();
     }
-  }, [loading]);
+  }, [loading, sort]);
 
   function filterCountries() {
     return countries.filter((country) => {
       return (
-        country.name.toLowerCase().includes(query) ||
-        (country.name.includes(query) &&
-          (country.continent === continent || continent === 'Choose'))
+        (country.name.toLowerCase().includes(query) || country.name.includes(query)) &&
+        (country.continent === continent || continent === 'Choose')
       );
     });
   }
@@ -47,6 +48,7 @@ function App() {
               setQuery(e.target.value);
             }}
           />
+          <Controls setSort={setSort} />
           <select value={continent} onChange={(e) => setContinent(e.target.value)}>
             <option value="Choose">Choose</option>
             <option value="Africa">Africa</option>
