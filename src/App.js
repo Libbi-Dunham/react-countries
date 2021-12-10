@@ -20,7 +20,9 @@ function App() {
   function filterCountries() {
     return countries.filter((country) => {
       return (
-        country.name.includes(query) && (country.continent === continent || continent === 'Choose')
+        country.name.toLowerCase().includes(query) ||
+        (country.name.includes(query) &&
+          (country.continent === continent || continent === 'Choose'))
       );
     });
   }
