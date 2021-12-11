@@ -11,7 +11,7 @@ function App() {
   const [query, setQuery] = useState([]);
   const [continent, setContinent] = useState('Choose');
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState('a');
+  const [sort, setSort] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       const countriesData = await getCountries(sort);
@@ -26,12 +26,19 @@ function App() {
   }, [loading, sort]);
 
   function filterCountries() {
-    return countries.filter((country) => {
+    let filteredCountries = countries.filter((country) => {
       return (
         (country.name.toLowerCase().includes(query) || country.name.includes(query)) &&
         (country.continent === continent || continent === 'Choose')
       );
     });
+    if (sort === true) {
+      return filteredCountries.sort((a, b) => {
+        return a.name > b.name ? 1 : -1;
+      });
+    } else {
+      return filteredCountries;
+    }
   }
 
   return (

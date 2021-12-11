@@ -3,9 +3,9 @@ import React from 'react';
 export default function Controls({ sort, setSort }) {
   return (
     <div>
-      <select className="sort" value={sort} onChange={(e) => setSort(e.target.value)}>
+      <select className="sort" value={sort} onChange={() => setSort((prevState) => !prevState)}>
+        <option value="all">All</option>
         <option value="a-z">A-Z</option>
-        <option value="z-a">Z-A</option>
       </select>
     </div>
   );
